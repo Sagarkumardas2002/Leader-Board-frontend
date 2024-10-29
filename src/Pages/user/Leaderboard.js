@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import Header from "../../Navbar/Header";
-import Footer from "../../Navbar/Footer";
 
 // Modal Component for displaying user history
 const UserHistoryModal = ({ isOpen, onClose, history, username }) => {
@@ -11,25 +9,25 @@ const UserHistoryModal = ({ isOpen, onClose, history, username }) => {
 
   return (
     <>
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center overflow-auto">
-      <div className="bg-white p-4 rounded-lg max-w-lg w-full">
-        <h2 className="text-lg font-bold mb-4">{username}'s History</h2>
-        <ul>
-          {history.map((entry, index) => (
-            <li key={index} className="border-b py-2">
-              <div>Date: {entry.date}</div>
-              <div>Points Awarded: {entry.pointsAwarded}</div>
-            </li>
-          ))}
-        </ul>
-        <button
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-          onClick={onClose}
-        >
-          Close
-        </button>
+      <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center overflow-auto">
+        <div className="bg-white p-4 rounded-lg max-w-lg w-full">
+          <h2 className="text-lg font-bold mb-4">{username}'s History</h2>
+          <ul>
+            {history.map((entry, index) => (
+              <li key={index} className="border-b py-2">
+                <div>Date: {entry.date}</div>
+                <div>Points Awarded: {entry.pointsAwarded}</div>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
       </div>
-    </div>
     </>
   );
 };
@@ -100,7 +98,7 @@ const Leaderboard = () => {
 
   return (
     <>
-    <Header/>
+      <Header />
       <div>
         {/* Tabs */}
         <div className="flex justify-center space-x-4 my-4">

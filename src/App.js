@@ -17,7 +17,7 @@ import About from "./Pages/About";
 function App() {
   return (
     <Router>
-      <div className="container mx-auto">
+      <div className="containermin-h-screen w-full">
         <Routes>
           <Route path="/header" element={<Header />} />
           <Route path="/footer" element={<Footer />} />
@@ -45,7 +45,9 @@ function App() {
           pauseOnHover
         />
       </div>
+      <Footer />
     </Router>
+
   );
 }
 

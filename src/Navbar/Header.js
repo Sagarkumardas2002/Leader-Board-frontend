@@ -8,7 +8,7 @@ const Header = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleProfile = () => setIsPopupOpen(!isPopupOpen); // Toggle popup visibility
+  const handleProfile = () => setIsPopupOpen(!isPopupOpen);
   const handleClosePopup = () => setIsPopupOpen(false);
 
   const handleLogout = () => {
@@ -18,31 +18,44 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-black p-4 text-white">
-      <ul className="flex justify-between w-full items-center">
+    <nav className="bg-black p-4 md:p-6 text-white shadow-md">
+      <ul className="flex justify-between items-center  mx-auto px-2">
         {/* Left side - Leaderboard */}
-        <li style={{textTransform:"uppercase"}}>
-          <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}>
+        <li className="text-lg md:text-xl font-semibold">
+          <NavLink
+            to="/leaderboard"
+            className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}
+            style={{ textTransform: "uppercase" }}
+          >
             Leaderboard
           </NavLink>
         </li>
 
         {/* Right side - Other links */}
-        <div className="flex space-x-4">
+        <div className="flex items-center space-x-4 text-sm md:text-base">
           {!auth?.user ? (
             <>
               <li>
-                <NavLink to="/login" className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}
+                >
                   Login
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/register" className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}>
+                <NavLink
+                  to="/register"
+                  className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}
+                >
                   Register
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}
+                >
                   Home
                 </NavLink>
               </li>
@@ -50,7 +63,10 @@ const Header = () => {
           ) : (
             <>
               <li>
-                <NavLink to="/" className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) => (isActive ? "text-blue-400" : "hover:text-blue-400")}
+                >
                   Home
                 </NavLink>
               </li>

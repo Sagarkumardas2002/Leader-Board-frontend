@@ -4,17 +4,16 @@ import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../../Navbar/Header";
 import Footer from "../../Navbar/Footer";
-import { useAuth } from "./../../context/AuthContext"; // Import your AuthContext
+import { useAuth } from "./../../context/AuthContext";
 import Message from "./message";
 import TabButton from "../Tab";
 
 const Home = () => {
   const location = useLocation();
   const [users, setUsers] = useState([]);
-  const [auth, setAuth] = useAuth(); // Use authentication context
+  const [auth, setAuth] = useAuth();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Fetch data from the backend API
   const fetchUsers = useCallback(async () => {
     try {
       const response = await fetch(
@@ -40,7 +39,6 @@ const Home = () => {
 
   const handleClaimPoints = async (username) => {
     if (!auth.user) {
-      // If user is not logged in, show popup
       setIsPopupOpen(true);
       return;
     }
@@ -60,7 +58,7 @@ const Home = () => {
 
       if (data.success) {
         toast.success(`Points claimed successfully for ${username}`);
-        fetchUsers(); // Refresh the user list after claiming
+        fetchUsers();
       } else {
         handleError("Failed to claim points.");
       }
@@ -73,68 +71,69 @@ const Home = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-
   return (
-    <div className="bg-gray-100 min-h-screen">
-      {/* Top Bar */}
+    <>
       <Header />
-      
-      {/* Popup for login prompt */}
-      {isPopupOpen && (
-        <Message 
-          message="Please login to vote."
-          onClose={() => setIsPopupOpen(false)} 
-        />
-      )}
 
-      {/* Tabs */}
-      <div className="flex justify-center space-x-4 my-4">
-        <TabButton to="/" isActive={location.pathname === "/"}>
-          Daily
-        </TabButton>
-        <TabButton to="/weekly" isActive={location.pathname === "/weekly"}>
-          Weekly
-        </TabButton>
-        <TabButton to="/monthly" isActive={location.pathname === "/monthly"}>
-          Monthly
-        </TabButton>
-      </div>
+      <div className="bg-gray-100 flex flex-col items-center min-h-screen">
+        {isPopupOpen && (
+          <Message
+            message="Please login to vote."
+            onClose={() => setIsPopupOpen(false)}
+          />
+        )}
 
-      {/* Top Users */}
-      <div className="flex justify-around items-center my-4">
-        {users.slice(0, 3).map((user) => (
-          <div className="text-center" key={user._id}>
-            <div>{user.username}</div>
-            <div>{user.Points}</div>
-            <div className="text-orange-500">Prize: ₹{user.Points}</div>
+        <div className="w-full max-w-4xl px-6">
+          {/* Tabs */}
+          <div className="flex justify-center space-x-6 my-8">
+            <TabButton to="/" isActive={location.pathname === "/"}>
+              Daily
+            </TabButton>
+            <TabButton to="/weekly" isActive={location.pathname === "/weekly"}>
+              Weekly
+            </TabButton>
+            <TabButton to="/monthly" isActive={location.pathname === "/monthly"}>
+              Monthly
+            </TabButton>
           </div>
-        ))}
-      </div>
 
-      {/* Rank List */}
-      <ul className="space-y-2">
-        {users.map((user, index) => (
-          <li
-            key={user._id}
-            onClick={() => handleClaimPoints(user.username)}
-            className="flex justify-between items-center bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200"
-          >
-            <div className="flex items-center space-x-4">
-              <CiUser />
-              <div>
+          {/* Top Users */}
+          <div className="grid grid-cols-3 gap-4 my-8 text-center text-lg font-semibold">
+            {users.slice(0, 3).map((user) => (
+              <div className="p-4 bg-white rounded-lg shadow-md" key={user._id}>
                 <div>{user.username}</div>
-                <span>Rank: {index + 1}</span>
+                <div className="text-gray-600">Points: {user.Points}</div>
+                <div className="text-orange-500">Prize: ₹{user.Points}</div>
               </div>
-            </div>
-            <div className="text-orange-500">Prize: ₹{user.Points}</div>
-            <div className="text-green-500">Points: {user.Points}</div>
-          </li>
-        ))}
-      </ul>
+            ))}
+          </div>
 
-      {/* Bottom Navigation Bar */}
-      <Footer />
-    </div>
+          {/* Rank List */}
+          <ul className="space-y-4">
+            {users.map((user, index) => (
+              <li
+                key={user._id}
+                onClick={() => handleClaimPoints(user.username)}
+                className="flex justify-between items-center bg-white p-6 rounded-lg shadow-md cursor-pointer hover:bg-gray-200 transition duration-200"
+              >
+                <div className="flex items-center space-x-4">
+                  <CiUser size={28} className="text-gray-700" />
+                  <div>
+                    <div className="font-semibold text-xl">{user.username}</div>
+                    <span className="text-gray-500">Rank: {index + 1}</span>
+                  </div>
+                </div>
+                <div className="text-orange-500 font-bold">Prize: ₹{user.Points}</div>
+                <div className="text-green-500 font-bold">Points: {user.Points}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Footer />
+      </div>
+    </>
+
   );
 };
 

@@ -34,58 +34,62 @@ const Monthly = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 min-h-screen pb-20">
-      <Header/>
-     
-      <div className="flex justify-center space-x-4 my-4">
-        <TabButton to="/" isActive={location.pathname === "/"}>
-          Daily
-        </TabButton>
-        <TabButton to="/weekly" isActive={location.pathname === "/weekly"}>
-          Weekly
-        </TabButton>
-        <TabButton to="/monthly" isActive={location.pathname === "/monthly"}>
-          Monthly
-        </TabButton>
-      </div>
-      {/* Top Users */}
-      <div className="flex justify-around items-center my-4">
-        {users.slice(0, 3).map((user) => (
-          <div className="text-center" key={user._id}>
-            <div>{user._id}</div>
-            <div>{user.totalPointsAwarded}</div>
-            <div className="text-orange-500">
-              Prize: ₹{user.totalPointsAwarded}
+    <> <Header />
+      <div className="bg-gray-100 min-h-screen pb-20 flex flex-col items-center">
+
+
+        <div className="flex justify-center space-x-4 my-8">
+          <TabButton to="/" isActive={location.pathname === "/"}>
+            Daily
+          </TabButton>
+          <TabButton to="/weekly" isActive={location.pathname === "/weekly"}>
+            Weekly
+          </TabButton>
+          <TabButton to="/monthly" isActive={location.pathname === "/monthly"}>
+            Monthly
+          </TabButton>
+        </div>
+
+        {/* Top Users */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8 text-center text-lg font-semibold w-full max-w-4xl">
+          {users.slice(0, 3).map((user) => (
+            <div
+              className="bg-white p-6 rounded-lg shadow-md"
+              key={user._id}
+            >
+              <div className="font-semibold">{user._id}</div>
+              <div className="text-gray-600">Total Points: {user.totalPointsAwarded}</div>
+              <div className="text-orange-500">Prize: ₹{user.totalPointsAwarded}</div>
             </div>
-          </div>
-        ))}
-      </div>
-      {/* Rank List */}
-      <ul className="space-y-2">
-        {users.map((user, index) => (
-          <li
-            key={user._id}
-            className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
-          >
-            <div className="flex items-center space-x-4">
-              <CiUser />
-              <div>
-                <div>{user._id}</div> {/* Assuming user.username exists */}
-                <span>Rank: {index + 1}</span>
+          ))}
+        </div>
+
+        {/* Rank List */}
+        <ul className="space-y-4 w-full max-w-4xl">
+          {users.map((user, index) => (
+            <li
+              key={user._id}
+              className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md hover:bg-gray-200 transition duration-200"
+            >
+              <div className="flex items-center space-x-4">
+                <CiUser size={28} className="text-gray-700" />
+                <div>
+                  <div className="font-semibold text-xl">{user._id}</div>
+                  <span className="text-gray-500">Rank: {index + 1}</span>
+                </div>
               </div>
-            </div>
-            <div className="text-orange-500">
-              Prize: ₹{user.totalPointsAwarded}
-            </div>
-            
-            <div className="text-green-500">{user.totalPointsAwarded}</div>
-          </li>
-        ))}
-      </ul>
-      <Footer/>
-      {/* Bottom Navigation Bar */}
-    </div>
+              <div className="text-orange-500 font-bold">Prize: ₹{user.totalPointsAwarded}</div>
+              <div className="text-green-500 font-bold">{user.totalPointsAwarded}</div>
+            </li>
+          ))}
+        </ul>
+
+        <Footer />
+        {/* Bottom Navigation Bar */}
+      </div>
+    </>
   );
+
 };
 
 export default Monthly;
